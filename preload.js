@@ -1,17 +1,32 @@
-/**
- * The preload script runs before. It has access to web APIs
- * as well as Electron's renderer process modules and some
- * polyfilled Node.js functions.
- * 
- * https://www.electronjs.org/docs/latest/tutorial/sandbox
- */
-window.addEventListener('DOMContentLoaded', () => {
-  const replaceText = (selector, text) => {
-    const element = document.getElementById(selector)
-    if (element) element.innerText = text
-  }
+const { ipcRenderer } = require("electron");
 
-  for (const type of ['chrome', 'node', 'electron']) {
-    replaceText(`${type}-version`, process.versions[type])
-  }
-})
+// When the DOM is ready
+window.addEventListener("DOMContentLoaded", () => {
+  // Send a message to the main process to get the current time
+  ipcRenderer.send("get-current-time");
+
+  // Listen for the current time from the main process
+  ipcRenderer.on("current-time", (event, currentTime) => {
+    // Set the current time in the HTML element
+    const currentTimeElement = document.getElementById("currentTime");
+    currentTimeElement.textContent = currentTime;
+  });
+
+
+
+
+  ipcRenderer.send("get-formattedtime");
+
+  // Listen for the current time from the main process
+  ipcRenderer.on("formatted-time", (event, formattedBootTime) => {
+    // Set the current time in the HTML element
+    const currentTimeElement1 = document.getElementById("formattedBootTime");
+    currentTimeElement1.textContent = formattedBootTime;
+  });
+
+
+  
+
+
+
+});
