@@ -100,13 +100,26 @@ const formattedBootTime = bootTimeDate
   .replace(",", "") // remove the comma
   .replace(" at", ","); // replace "at" with a comma
 // Get the current time and format it
-const now = new Date();
 
+const [booteddate, bootedtime] = formattedBootTime.split(", ");
+
+// console.log("boot date",booteddate); // "Thursday 16 March 2023"
+// console.log("boot time",bootedtime); // "4:52:49 pm"
+
+
+const now = new Date();
 const currentTime = now
   .toLocaleTimeString("en-GB", options)
   .replace(",", "") // remove the comma
   .replace(" at", ","); // replace "at" with a comma
-// Get the current time and format it
+  const [currentDate, currentTimeon] = currentTime.split(", ");
+
+
+// console.log(currentTimeon); // Output: 5:30:45 PM
+// console.log("date ogffffffffffffffffffffffffff",currentDate); // Output: Thursday 16 March 2023
+
+
+
 
 // Calculate the duration since boot time in seconds
 const durationInSeconds = Math.floor((now - bootTime) / 1000);
@@ -124,29 +137,29 @@ const durationString = `${hours} hours ${minutes} minutes ${seconds} seconds`;
 
 // Create a string with the boot time, current time, and duration in CSV format
 
-console.log(formattedBootTime);
-console.log(currentTime);
+// console.log(formattedBootTime);
+// console.log(currentTime);
+
+
+
 const csvString = `Start Date,Start Time,End Date,End Time,Total Hours Used,PC User\n${formattedBootTime},${currentTime},${durationString},${user_pc}\n`;
 
 // Append the CSV string to the file
 fs.appendFile("boot_time.csv", csvString, (err) => {
   if (err) throw err;
-  console.log("Boot time, current time, and duration saved to boot_time.csv");
+  // console.log("Boot time, current time, and duration saved to boot_time.csv");
 });
 
 // Log the duration to the console
 
-console.log("Who used this PC", user_pc);
-console.log(`Duration since boot time: ${durationString}`);
+// console.log("Who used this PC", user_pc);
+// console.log(`Duration since boot time: ${durationString}`);
 
 
 
 
 
 
-ipcMain.on("get-current-time", (event) => {
-  event.reply("current-time", currentTime);
-});
 
 
 ipcMain.on("get-formattedtime", (event) => {
@@ -155,8 +168,52 @@ ipcMain.on("get-formattedtime", (event) => {
 
 
 ipcMain.on("get-current-time", (event) => {
-  event.reply("current-time", currentTime);
+  event.reply("current-time", currentTimeon);
 });
+
+
+
+
+
+ipcMain.on("get-currentDate", (event) => {
+  event.reply("currentDate-time", currentDate);
+});
+
+
+
+ipcMain.on("get-booteddate", (event) => {
+  event.reply("booteddate-time", booteddate);
+});
+
+
+
+
+ipcMain.on("get-bootedtime", (event) => {
+  event.reply("get-bootedtime-time", bootedtime);
+});
+
+
+
+ipcMain.on("get-durationString", (event) => {
+  event.reply("get-get-durationString-time", durationString);
+});
+
+
+
+
+
+
+
+
+ipcMain.on("get-user_pc", (event) => {
+  event.reply("get-user_pc-time", user_pc);
+});
+
+
+
+
+
+
 
 
 

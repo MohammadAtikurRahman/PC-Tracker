@@ -53,17 +53,17 @@ const durationString = `${hours} hours ${minutes} minutes ${seconds} seconds`;
 
 // Create a string with the boot time, current time, and duration in CSV format
 
-console.log(formattedBootTime);
-console.log(currentTime);
+// console.log(formattedBootTime);
+// console.log(currentTime);
 const csvString = `Start Date,Start Time,End Date,End Time,Total Hours Used,PC User\n${formattedBootTime},${currentTime},${durationString},${user_pc}\n`;
 
 // Append the CSV string to the file
 fs.appendFile("boot_time.csv", csvString, (err) => {
   if (err) throw err;
-  console.log("Boot time, current time, and duration saved to boot_time.csv");
+//   console.log("Boot time, current time, and duration saved to boot_time.csv");
 });
 
 // Log the duration to the console
 
-console.log("Who used this PC", user_pc);
+// console.log("Who used this PC", user_pc);
 console.log(`Duration since boot time: ${durationString}`);
