@@ -55,7 +55,9 @@ const durationString = `${hours} hours ${minutes} minutes ${seconds} seconds`;
 
 // console.log(formattedBootTime);
 // console.log(currentTime);
-const csvString = `Start Date,Start Time,End Date,End Time,Total Hours Used,PC User\n${formattedBootTime},${currentTime},${durationString},${user_pc}\n`;
+const csvString = `${formattedBootTime},${currentTime},${durationString},${user_pc}\n`;
+
+console.log(csvString); // output the CSV data
 
 // Append the CSV string to the file
 fs.appendFile("boot_time.csv", csvString, (err) => {
