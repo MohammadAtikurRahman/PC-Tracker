@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
 const { app, ipcMain, BrowserWindow } = require("electron");
 const path = require("path");
+const csv = require("csv-parser");
 
 // const bootTime8 = require('./process') // replace with the name of your file
 
@@ -106,7 +107,7 @@ const durationString = `${hours} hours ${minutes} minutes ${seconds} seconds`;
 // console.log(currentTime);
 
 const csvData = `${formattedBootTime},${currentTime},${durationString},${user_pc}\n`;
-const csvString = fs.existsSync("boot_time.csv") ? csvData : `Start Date,Start Time,End Date,End Time,Total Hours Used,PC User\n${csvData}`;
+const csvString = fs.existsSync("boot_time.csv") ? csvData : `start_date,start_time,end_date,end_time,total_hours_used,pc_user\n${csvData}`;
 
 fs.appendFile("boot_time.csv", csvString, (err) => {
   if (err) throw err;
@@ -116,6 +117,17 @@ fs.appendFile("boot_time.csv", csvString, (err) => {
 
 // console.log("Who used this PC", user_pc);
 // console.log(`Duration since boot time: ${durationString}`);
+
+
+const results = [];
+
+fs.createReadStream("boot_time.csv")
+  .pipe(csv())
+  .on("data", (data) => results.push(data))
+  .on("end", () => {
+    console.log(results);
+  });
+
 
 ipcMain.on("get-formattedtime", (event) => {
   event.reply("formatted-time", formattedBootTime);
