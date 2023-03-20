@@ -157,6 +157,14 @@ ipcMain.on("get-user_pc", (event) => {
   event.reply("get-user_pc-time", user_pc);
 });
 
+
+
+
+
+
+
+
+
 app.on("window-all-closed", function () {
   if (process.platform !== "darwin") app.quit();
 });
